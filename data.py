@@ -75,7 +75,7 @@ class Player(db.Model, BaseModel, GamificationMixin, PlayerActionsMixin):
     email = db.Column(db.Text, unique=True, nullable=False)
 
     def __repr__(self):
-        return f"<Player {self.username}>"
+        return f"<Player {self.title}>"
 
 class Challenge(db.Model, BaseModel, GamificationMixin):
     id = db.Column(db.Integer, primary_key=True)
