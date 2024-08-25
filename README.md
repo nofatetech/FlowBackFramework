@@ -26,7 +26,33 @@ This was born as an idea to bring full "pro" web backend technology for the Godo
 - Setup your main pPp Database (optional, you could technically work without your own database. We can recommend Supabase.com to start easy)
 - Run the "install_and_run" file (BAT for windows, SH for Mac/Linux). This will run the http server probably in http://127.0.0.1:5000
 - The test_requests.rest file has sample HTTP calls to test your framework. We use the REST Client (Huachao Mao) VSCode Extention for easy testing.
-- Run migration scripts optionally to manage your DB (check out notes.md).
+- Use migrations optionally to manage your DB.
+
+Flask Migration commands:
+
+flask db init
+    > Initializes the migrations directory.
+flask db migrate -m "message"
+    > Generates a new migration script based on model changes.
+flask db upgrade
+    > Applies the migrations to the database.
+flask db downgrade
+    > Rolls back the last migration applied.
+flask db current
+    > Shows the current migration version applied to the database.
+flask db stamp <revision>
+    > Stamps the database with a specific revision without running migrations.
+flask db migrate --autogenerate -m "message"
+    > Automatically generates a migration script based on detected changes.
+flask db downgrade <revision>
+    > Rolls back the database to a specific revision.
+flask db history
+    > Displays the history of all applied migrations.
+flask db merge <revision1> <revision2> -m "message"
+    > Merges two branches in the migration history.
+
+
+
 
 ## Development Guide
 
