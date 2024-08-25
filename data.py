@@ -24,6 +24,12 @@ db = SQLAlchemy()
 # region MIXINS
 
 
+# example:
+# newuser = params["newuser"] or None
+# if newuser:
+#     carl = Player(**newuser)
+#     res1 = carl.save(db.session)
+
 
 class BaseModel:
     @declared_attr
