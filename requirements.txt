@@ -4,5 +4,3 @@ Flask-Migrate>=3.0.0
 requests
 python-dotenv
 psycopg2-binary
-# aiohttp
-# peewee

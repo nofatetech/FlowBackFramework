@@ -91,8 +91,8 @@ def home():
 def post_flow():
     rjson = request.get_json(silent=False)
     if rjson:
-        flowname = rjson["flow"]
-        params = rjson["params"]
+        flowname = rjson["flow"] or ""
+        params = rjson["params"] or ""
     
     if flowname in FLOWS:
         flow = FLOWS[flowname]()
