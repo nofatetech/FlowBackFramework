@@ -34,13 +34,13 @@ class BaseModel:
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def save(self):
-        # Common save logic
-        pass
+    # def save(self):
+    #     # Common save logic
+    #     pass
 
-    def delete(self):
-        # Common delete logic
-        pass
+    # def delete(self):
+    #     # Common delete logic
+    #     pass
 
 class GamificationMixin:
     def player_add_points(self, points: float, challenge: 'Challenge' = None):
