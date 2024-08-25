@@ -6,6 +6,9 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from datetime import datetime
+from sqlalchemy.ext.declarative import declared_attr
+
 
 # Initialize the database instance
 db = SQLAlchemy()
@@ -23,6 +26,14 @@ db = SQLAlchemy()
 
 
 class BaseModel:
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     def save(self):
         # Common save logic
         pass
