@@ -1,0 +1,8 @@
+Flask==2.3.2
+Flask-SQLAlchemy==3.0.5
+Flask-Migrate>=3.0.0
+requests
+python-dotenv
+psycopg2-binary
+# aiohttp
+# peewee
