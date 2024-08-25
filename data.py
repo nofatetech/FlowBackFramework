@@ -30,17 +30,40 @@ class BaseModel:
     def __tablename__(cls):
         return cls.__name__.lower()
 
+    # crate object with any dict
+    def __init__(self, data=None, **kwargs):
+        super().__init__(**kwargs)
+        if data:
+            for key, value in data.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
+
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # def save(self):
-    #     # Common save logic
-    #     pass
+    def save(self, session):
+        rett = {"result":"", "error": ""}
+        try:
+            session.add(self)
+            session.commit()
+            rett["status"] = "OK"
+            return "OK"
+        except exc.SQLAlchemyError as e:
+            session.rollback()
+            error_message = f"ERROR!! SQLAlchemyError: {str(e)}"
+            rett["status"] = "error"
+            rett["error"] = error_message
+        except Exception as e:
+            session.rollback()
+            error_message = f"ERROR!! Exception: {str(e)}"
+            rett["status"] = "error"
+            rett["error"] = error_message
+        return rett
 
-    # def delete(self):
-    #     # Common delete logic
-    #     pass
+    def delete(self):
+        # Common delete logic
+        pass
 
 class GamificationMixin:
     def player_add_points(self, points: float, challenge: 'Challenge' = None):
