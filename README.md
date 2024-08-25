@@ -22,8 +22,8 @@ This was born as an idea to bring full "pro" web backend technology for the Godo
 
 - Put the files in a folder that will hold your Backend server
 - Create a .env file (copy from .end.demo) and setup your data
-- Setup your Data, Flows, Services
-- Setup your main APp Database (optional, you could technically work without your own database. We can recommend Supabase.com to start easy)
+- Setup your Data, Flows, Sources
+- Setup your main pPp Database (optional, you could technically work without your own database. We can recommend Supabase.com to start easy)
 - Run the "install_and_run" file (BAT for windows, SH for Mac/Linux). This will run the http server probably in http://127.0.0.1:5000
 - The test_requests.rest file has sample HTTP calls to test your framework. We use the REST Client (Huachao Mao) VSCode Extention for easy testing.
 - Run migration scripts optionally to manage your DB (check out notes.md).
