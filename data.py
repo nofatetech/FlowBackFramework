@@ -31,6 +31,7 @@ db = SQLAlchemy()
 #     res1 = carl.save(db.session)
 
 
+
 class BaseModel:
     @declared_attr
     def __tablename__(cls):
