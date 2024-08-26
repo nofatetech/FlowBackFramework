@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from datetime import datetime, timezone
 from sqlalchemy.ext.declarative import declared_attr
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 # Initialize the database instance
@@ -33,9 +33,10 @@ db = SQLAlchemy()
 
 @dataclass
 class BaseDataModel:
-    id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    id: int
+    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    deleted_at: datetime = field(default=None)
 
 # Some functionality I want for many of my data types (models)
 class BaseModel:
