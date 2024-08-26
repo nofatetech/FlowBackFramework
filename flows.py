@@ -59,6 +59,17 @@ class Flows:
         def __init__(self, *args, **kwargs):
             pass
 
+    class GetGodotTypes:
+        def run(self, params: dict):
+            tPlayer = Player()
+            ttPlayer = tPlayer.generate_gdscript()
+   
+            rett = {
+                "Player" : ttPlayer
+            }
+            return rett
+
+
 # endregion
 
 

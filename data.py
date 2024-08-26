@@ -137,6 +137,45 @@ class SimpleBaseModel:
             rett["error"] = error_message
         return rett
 
+class GodotMixin:
+
+    def generate_gdscript(self):
+        class_name = self.__class__.__name__
+        # Start of the GDScript content
+        gdscript_code = f"""# {class_name}.gd
+extends Node
+
+class_name {class_name}
+"""
+
+        # Add variables based on model fields
+        for column in self.__table__.columns:
+            if column.name == 'id':  # Skip primary key or other special fields
+                continue
+            column_type = self.get_gdscript_type(column.type)
+            default_value = self.get_default_value(column.default)
+            gdscript_code += f"var {column.name}: {column_type} = {default_value}\n"
+
+        return gdscript_code
+
+    def get_gdscript_type(self, sql_type):
+        # Map SQLAlchemy types to GDScript types
+        if isinstance(sql_type, Integer):
+            return "int"
+        elif isinstance(sql_type, String):
+            return "String"
+        # Add more type mappings as needed
+        return "Variant"
+
+    def get_default_value(self, default):
+        # Convert SQLAlchemy default values to GDScript default values
+        if default is None:
+            return "null"
+        if isinstance(default, str):
+            return f'"{default}"'
+        return str(default)
+
+
 
 # Some functionality I want for many of my data types (models)
 class MyyyBaseModel:
