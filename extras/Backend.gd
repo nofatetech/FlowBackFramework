@@ -7,7 +7,6 @@ extends Node2D # change to your Node Type
 # Attach this script to a node in your scene, name it "Backend" or whatever you like. Call it from other scenes ($Backend.flow)
 # 
 # func _ready():
-# 	#backend = Backend.new()
 # 	var params = {
 # 			"token": "111",
 # 			"newuser": {
