@@ -1,5 +1,8 @@
 extends Node2D # change to your Node Type
 
+# 
+# Godot Script to connect to this backend
+# 
 # SAMPLE USE:
 # Attach this script to a node in your scene, name it "Backend" or whatever you like. Call it from other scenes ($Backend.flow)
 # 
