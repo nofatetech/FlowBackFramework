@@ -6,8 +6,9 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy.ext.declarative import declared_attr
+from dataclasses import dataclass
 
 
 # Initialize the database instance
@@ -30,25 +31,19 @@ db = SQLAlchemy()
 #     carl = Player(**newuser)
 #     res1 = carl.save(db.session)
 
-
-
-class BaseModel:
-    @declared_attr
-    def __tablename__(cls):
-        return cls.__name__.lower()
-
-    # crate object with any dict
-    def __init__(self, data=None, **kwargs):
-        super().__init__(**kwargs)
-        if data:
-            for key, value in data.items():
-                if hasattr(self, key):
-                    setattr(self, key, value)
-
+@dataclass
+class BaseDataModel:
     id = db.Column(db.Integer, primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
 
+# Some functionality I want for many of my data types (models)
+class BaseModel:
+    # @declared_attr
+    # def __tablename__(cls):
+    #     return cls.__name__.lower()
+
+    # TODO: easy save methods here?
     def save(self, session):
         rett = {"result":"", "error": ""}
         try:
@@ -93,13 +88,13 @@ class PostActionsMixin:
 # endregion
 
 
-# MODELS
+# TYPES / MODELS
 
-# region MODELS
+# region TYPES / MODELS
 
 
 
-class Player(db.Model, BaseModel, GamificationMixin, PlayerActionsMixin):
+class Player(db.Model, BaseDataModel, BaseModel, GamificationMixin, PlayerActionsMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True, nullable=False)
     email = db.Column(db.Text, unique=True, nullable=False)
@@ -107,14 +102,14 @@ class Player(db.Model, BaseModel, GamificationMixin, PlayerActionsMixin):
     def __repr__(self):
         return f"<Player {self.title}>"
 
-class Challenge(db.Model, BaseModel, GamificationMixin):
+class Challenge(db.Model, BaseDataModel, BaseModel, GamificationMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"<Challenge {self.title}>"
 
-class Post(db.Model, BaseModel, GamificationMixin):
+class Post(db.Model, BaseDataModel, BaseModel, GamificationMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
