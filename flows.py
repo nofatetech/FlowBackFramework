@@ -107,16 +107,16 @@ def post_flow():
     
     if flowname in FLOWS:
         flow = FLOWS[flowname]()
-        result = flow.run(params)
+        flow_result = flow.run(params)
         rett = {
             "status": "ok",
-            "result": result,
+            "flow_result": flow_result,
             "error": "",
         }
     else:
         rett = {
             "status": "error",
-            "result": None,
+            "flow_result": None,
             "error": f"Flow Not Found - %s" % str(flowname),
         }
         # raise ValueError(f"Workflow '{flowname}' not found.")

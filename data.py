@@ -88,18 +88,17 @@ class SimpleBaseModel:
     def __tablename__(cls):
         return cls.__name__.lower()
 
-    # crate object with any dict
-    def __init__(self, data=None, **kwargs):
-        super().__init__(**kwargs)
-        if data:
-            for key, value in data.items():
-                if hasattr(self, key):
-                    setattr(self, key, value)
-
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     deleted_at = db.Column(db.DateTime, default=None)
+
+    # create objects with any dict
+    def fill(self, data=None):
+        if data:
+            for key, value in data.items():
+                if hasattr(self, key):
+                    setattr(self, key, value)
 
     def save(self, session):
         rett = {"result":"", "error": ""}
@@ -136,6 +135,7 @@ class SimpleBaseModel:
             rett["status"] = "error"
             rett["error"] = error_message
         return rett
+
 
 class GodotMixin:
 
