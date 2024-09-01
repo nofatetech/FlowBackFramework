@@ -1,7 +1,8 @@
 
 # region INIT APP
 
-from flask import Flask, jsonify, request
+import time
+from flask import Flask, request, g, jsonify
 from sources import Sources
 from dotenv import load_dotenv
 import os
@@ -28,6 +29,22 @@ db.init_app(app)
 
 migrate = Migrate(app, db)  # Initialize Flask-Migrate with Flask app and SQLAlchemy instance
 
+
+
+# time the request
+@app.before_request
+def start_timer():
+    g.start_time = time.time()
+
+@app.after_request
+def end_timer(response):
+    if hasattr(g, 'start_time'):
+        elapsed_time = time.time() - g.start_time
+        if response.is_json:
+            data = response.get_json()
+            data['x-x-x-elapsed-time-x-x-x'] = elapsed_time
+            response.set_data(jsonify(data).get_data())
+    return response
 
 
 # endregion
